@@ -1,0 +1,18 @@
+syntax = "proto2";
+
+/*
+* proto definition file used to generate protobuf java src.  
+*/
+package app.user;
+
+option java_package = "app.user";
+option java_outer_classname = "UserProtos";
+
+message User {
+  required string name = 1;
+  required int32 id = 2;
+}
+
+message UserList {
+  repeated User user = 1;
+}

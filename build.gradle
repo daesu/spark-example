@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.sparkjava:spark-core:2.3'
+    compile 'com.google.protobuf:protobuf-java:3.6.1'
+    testCompile 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
+}
+
+jar {
+    baseName = 'gs-gradle'
+    version =  '0.1.0'
+}
+
+mainClassName = 'app.Application'
+
+test {
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'spark-example': 'Spark Jar',  
+        	'Implementation-Version': 1,
+        	'Main-Class': 'app.Application'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

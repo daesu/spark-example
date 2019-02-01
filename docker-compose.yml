@@ -1,0 +1,7 @@
+version: '2.0'
+
+services:
+  spark:
+    image: daesu/spark
+    ports:
+      - 4567:4567
